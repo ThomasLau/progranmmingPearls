@@ -1,0 +1,42 @@
+# 待有时间找个格式化代码的方法....markdown似乎不是好用啊...while, another markup language...
+
+先来无事看代码，今看到如下，先贴一段commons-pool2里面的test代码:
+org.apache.commons.pool2.impl.TestSoftRefOutOfMemory.testOutOfMemory1000()这个方法
+pool = new SoftReferenceObjectPool<String>(new SmallPoolableObjectFactory());
+for (int i = 0 ; i < 1000 ; i++) {
+	pool.addObject();
+}
+String obj = pool.borrowObject();
+pool.returnObject(obj);
+obj = null;
+assertEquals(1000, pool.getNumIdle());
+
+final List<byte[]> garbage = new LinkedList<byte[]>();
+final Runtime runtime = Runtime.getRuntime();
+while (pool.getNumIdle() > 0) {
+	try {
+		long freeMemory = runtime.freeMemory();
+		if (freeMemory > Integer.MAX_VALUE) {
+			freeMemory = Integer.MAX_VALUE;
+		}
+		System.out.println("size:"+garbage.size()+"\tmem:"+runtime.freeMemory()+"\tidle:"+pool.getNumIdle()+"\tactive:"+pool.getNumActive());
+		garbage.add(new byte[Math.min(1024 * 1024, (int)freeMemory/2)]);
+	} catch (OutOfMemoryError oome) {
+		System.out.println(oome);
+		//System.gc();
+	}
+	//System.gc();
+}
+garbage.clear();
+System.gc();
+
+
+源代码意思显然是期待利用SoftReferenceObjectPool回收的特性{SoftReference All soft references to softly-reachable objects are guaranteed to have been cleared before the virtual machine throws an OutOfMemoryError.}
+但是跑了一下代码，发现事与愿违啊.程序进入死循环了.
+
+难道该常识有误？显然不是这样的，pool里的对象在OOM时候应该被回收的,问题就出在pool.getNumIdle()这一句，追踪代码最后到如下：
+
+
+
+
+
