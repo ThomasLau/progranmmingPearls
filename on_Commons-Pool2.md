@@ -3,7 +3,7 @@
 闲来无事看代码，今看到如下，先贴一段commons-pool2里面的test代码:
 1,
 org.apache.commons.pool2.impl.TestSoftRefOutOfMemory.testOutOfMemory1000()这个方法
-
+```java
     pool = new SoftReferenceObjectPool<String>(new SmallPoolableObjectFactory());
     for (int i = 0 ; i < 1000 ; i++) {
 	    pool.addObject();
@@ -31,7 +31,7 @@ org.apache.commons.pool2.impl.TestSoftRefOutOfMemory.testOutOfMemory1000()这个
     }
     garbage.clear();
     System.gc();
-    
+```
 源代码意思显然是期待利用SoftReferenceObjectPool回收的特性
 
 > SoftReference:
@@ -43,7 +43,7 @@ before the virtual machine throws an OutOfMemoryError.
 难道该常识有误？显然不是这样的，pool里的对象在OOM时候应该被回收的,问题就出在pool.getNumIdle()这一句，追踪代码最后到如下：
 org.apache.commons.pool2.impl.SoftReferenceObjectPool.removeClearedReferences
 	
-
+```java
     PooledSoftReference<T> ref;
 	while (iterator.hasNext()) {
 		ref = iterator.next();
@@ -51,7 +51,7 @@ org.apache.commons.pool2.impl.SoftReferenceObjectPool.removeClearedReferences
 			iterator.remove();
 		}
 	}
-
+```
 这里的bug涉及到没有区分强弱引用问题，待有空细述.不过这里可以在if里判断加ref.getReference().get() == null来避免该bug
 理由是：SoftReferenceObjectPool使用的是PooledSoftReference对象，PooledSoftReference has-a SoftReference,这是一个强引用，OOM前回收时，强引用是不胡回收的，这里判断ref.getReference() == null || ref.getReference().isEnqueued()来打到remove**应是**不对的
 
