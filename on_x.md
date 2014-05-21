@@ -92,6 +92,21 @@ duration = 5994005523
 duration = 6001348926
 duration = 6001934230
 ```
-
-
+what the hell it is!
+>>2,and more why i change some code here:
+```java
+	public final static int NUM_THREADS = 4; // change
+	//private static VolatileLong[] longs = null;//new VolatileLong[NUM_THREADS];
+	private final static VolatileLong[] longs =new VolatileLong[NUM_THREADS];
+	public /*final*/ static long ITERATIONS = 500L * 1000L * 1000L;
+	private final static long ITERATIONS2 = 500L * 1000L * 1000L;
+	private final int arrayIndex;
+```
+then the output is
+```java
+duration = 5988163065
+duration = 6045700869
+duration = 6003982313
+duration = 6044708577
+```
 
