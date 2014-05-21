@@ -65,9 +65,33 @@ public final class FalseSharingV2 implements Runnable {
 }
 ```
 this output will be:
-···java
+```java
 duration = 21278060524
 duration = 21110399588
 duration = 21325678304
 duration = 21329919433
-···
+```
+while if i change code in main class,output would be too much different,damn it!
+```java
+	public static void main(final String[] args) throws Exception {
+		//new FalseSharingV2(1);
+		//init();
+		for (int j = 1; j < 5; j++) {
+			//NUM_THREADS=j;
+			init();
+			final long start = System.nanoTime();
+			runTest();
+			System.out.println("duration = " + (System.nanoTime() - start));
+		}
+	}
+```
+output:
+```java
+duration = 20493769318
+duration = 5994005523
+duration = 6001348926
+duration = 6001934230
+```
+
+
+
