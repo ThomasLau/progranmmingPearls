@@ -93,7 +93,7 @@ duration = 6001348926
 duration = 6001934230
 ```
 what the hell it is!
->>2,and more why i change some code here:
+2,and more why i change some code here:
 ```java
 	public final static int NUM_THREADS = 4; // change
 	//private static VolatileLong[] longs = null;//new VolatileLong[NUM_THREADS];
