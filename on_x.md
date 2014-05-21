@@ -102,6 +102,21 @@ what the hell it is!<br/>
 	private final static long ITERATIONS2 = 500L * 1000L * 1000L;
 	private final int arrayIndex;
 ```
+or add a sleep in the main class:
+```java
+	public static void main(final String[] args) throws Exception {
+		Thread.sleep(10000);
+		//new FalseSharingV2(1);
+		//init();
+		for (int j = 1; j < 5; j++) {
+			//NUM_THREADS=j;
+			init();
+			final long start = System.nanoTime();
+			runTest();
+			System.out.println("duration = " + (System.nanoTime() - start));
+		}
+	}
+```
 then the output is
 ```java
 duration = 5988163065
