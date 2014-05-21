@@ -92,7 +92,7 @@ duration = 5994005523
 duration = 6001348926
 duration = 6001934230
 ```
-what the hell it is!
+what the hell it is!<br/>
 2,and more why i change some code here:
 ```java
 	public final static int NUM_THREADS = 4; // change
