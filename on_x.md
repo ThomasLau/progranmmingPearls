@@ -1,4 +1,4 @@
-最近看JMH生成的代码，发现，其类<h2>org.openjdk.jmh.logic.BlackHole.consumeCPU(long tokens)</h2>的实现
+最近看JMH生成的代码，发现，其类 **org.openjdk.jmh.logic.BlackHole.consumeCPU(long tokens)** 的实现
 ```java
     public static void consumeCPU(long tokens) {
         // If you are looking at this code trying to understand
