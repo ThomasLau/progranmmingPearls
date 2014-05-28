@@ -90,15 +90,15 @@ Random还有一个支持传参seed的构造函数，其等价new()之后synchron
     }
 ```
 以上是nextInt()时涉及的主要方法。  
-> 48-bits是应为 mask是一个48位的所以要移动48-bits位。  
-> 可以看到内部实现使用了CAS操作，即自旋锁。这也可见Random是**Thread-safe**的，  
+1. 48-bits是应为 mask是一个48位的所以要移动48-bits位。  
+2. 可以看到内部实现使用了CAS操作，即自旋锁。这也可见Random是**Thread-safe**的，  
 事实的确如此，可以在Math.random()中看到，其提供的静态方法正式依据private static Random randomNumberGenerator的实现  
 然而，同样可见的是，Random虽然是thread-safe的，但已知是cas在线程多起来的时候效果不是很好，  
 并且多线程共享一个Random是由问题的，因为他们公用一个随机序列（seed是一样的）  
 所以java 1,7中提供了一个较好的实现--**ThreadLocalRandom extends Random**  
 （看起源码发现其还使用pad0...来避免 **CPU的缓存竞争** 不仅觉得后背一阵冰凉啊，oracle的coder为了性能真实无所不用其即。这个后面会写一篇专门讨论）  
 Usage：java.util.concurrent.ThreadLocalRandom.current().nextInt(10)
-> 可见nextLong的实现
+3. 可见nextLong的实现
 ```java
     public long nextLong() {
         // it's okay that the bottom word remains signed.
