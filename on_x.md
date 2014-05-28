@@ -110,4 +110,3 @@ Random还有一个支持传参seed的构造函数，其等价new()之后synchron
 
 最后，说一下，伪随机数通常情况下可以得到很好的随机，但某些情况下不适用。比如使用蒙特卡洛的场合。
 Monte-Carlo的详细介绍<a href="http://www.cnblogs.com/leoo2sk/archive/2009/05/29/1491526.html">解析Monte-Carlo算法(基本原理,理论基础,应用实践)</a>  
-不过其文中“应用实例二”，计算概率高达99.9%，该部分应是错误的。
