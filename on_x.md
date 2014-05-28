@@ -2,27 +2,11 @@
 ```java
     public static void consumeCPU(long tokens) {
         // If you are looking at this code trying to understand
-        // the non-linearity on low token counts, know this:
-        // we are pretty sure the generated assembly for almost all
-        // cases is the same, and the only explanation for the
-        // performance difference is hardware-specific effects.
-        // Be wary to waste more time on this. If you know more
-        // advanced and clever option to implement consumeCPU, let us
-        // know.
-
-        // Randomize start so that JIT could not memoize; this helps
-        // to break the loop optimizations if the method is called
-        // from the external loop body.
+        // ...此处略
         long t = consumedCPU;
 
         // One of the rare cases when counting backwards is meaningful:
-        // for the forward loop HotSpot/x86 generates "cmp" with immediate
-        // on the hot path, while the backward loop tests against zero
-        // with "test". The immediate can have different lengths, which
-        // attribute to different machine code for different cases. We
-        // counter that with always counting backwards. We also mix the
-        // induction variable in, so that reversing the loop is the
-        // non-trivial optimization.
+        // ...此处略
         for (long i = tokens; i > 0; i--) {
             t += (t * 0x5DEECE66DL + 0xBL + i) & (0xFFFFFFFFFFFFL);
         }
@@ -43,7 +27,10 @@
      * <i>The Art of Computer Programming,</i> Volume 3:
      * <i>Seminumerical Algorithms</i>, section 3.2.1.
 ```
-这个需要抽时间看下
+这里总结下Random的实现。
+**伪随机算法
+这里就不说其使用的是伪随机算法--线性同余产生随机数。TAOCP volume 3.2.1里面有对其描述，这里摘录主要部分：
+    X<sub>n+1<sub> = (aX<sub>n</sub>+c) mod m ,n>=0
 
 
 
