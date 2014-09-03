@@ -10,3 +10,5 @@ just pick up something that stayed with me long after I read it. Glad to share w
 * **On xlog**<br>
   <a href='on_xlogs.md'>here</a> i find it of great pleasures trying to understand how the most famous logs func.
   both the the recipes and tips will be recorded here.
+* **some good articles**<br>
+  <a href='useful_links.md'>here</a> here is a page collecting some helpful links to me.
