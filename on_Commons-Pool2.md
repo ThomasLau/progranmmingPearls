@@ -53,7 +53,7 @@ org.apache.commons.pool2.impl.SoftReferenceObjectPool.removeClearedReferences
 	}
 ```
 这里的bug涉及到没有区分强弱引用问题，待有空细述.不过这里可以在if里判断加ref.getReference().get() == null来避免该bug
-理由是：SoftReferenceObjectPool使用的是PooledSoftReference对象，PooledSoftReference has-a SoftReference,这是一个强引用，OOM前回收时，强引用是不胡回收的，这里判断ref.getReference() == null || ref.getReference().isEnqueued()来打到remove**应是**不对的
+理由是：SoftReferenceObjectPool使用的是PooledSoftReference对象，PooledSoftReference has-a SoftReference,这是一个强引用，OOM前回收时，强引用是不会回收的，这里判断ref.getReference() == null || ref.getReference().isEnqueued()来达到remove**应是**不对的
 
 2,PerformanceTest
   单从示例给的数据，是符合预期的。但奇怪的是，修改了sleep时间，甚至设置为0，测算出的性能表现不是预期，甚至相悖甚远，待探明。
